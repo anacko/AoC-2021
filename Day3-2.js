@@ -10,56 +10,62 @@ let example = `00100
 11001
 00010
 01010`
-
-const formatInput = function(input) {
-  return input.split('\n')
-}
+const formatInput = input => input.split('\n')
 example = formatInput(example)
 console.log(example)
 
-const getMostOccurrences = function(input) {
+const getLifeSupport = function(input) {
 
-  const binSize = input[0].length
+  let oxyGenIdx = [...Array(input.length).keys()];
+  let CoScrubberIdx = [...Array(input.length).keys()];
 
-  // get occurrences of 0 and 1 by position
-  const occ0 = Array(binSize).fill(0)
-  const occ1 = Array(binSize).fill(0)
-  input.map(elem => (
-    [...elem].forEach((letter, index) => letter === '0' ? occ0[index]++ : occ1[index]++)
-  ))
-
-  // get gamma (most occurrences for each position) and epsilon (least occurrences)
-  const gamma = [];
-  const epsilon = [];
-  let gammaDec = 0;
-  let epsilonDec = 0;
-  for(let i = 0; i < binSize; i++) {
-    // occ0[i] > occ1[i] ? gamma.push(0) : gamma.push(1);
-    // epsilon.push(1 - gamma[i]);
-
-    let add = 2 ** (binSize - 1 - i);
-
-    occ0[i] > occ1[i] ? epsilonDec += add : gammaDec += add ;
-
+  const checkPopularity = function(input, pos) {
+    let idx0 = [];
+    let idx1 = [];
+    input.map((elem, index) => elem[pos] === '0' ? idx0.push(index) : idx1.push(index))
+    return { idx0, idx1 }
   }
 
-  // convert gamma and epsilon to decimal base
-  // let gammaDec = 0;
-  // let epsilonDec = 0;
-  // for(let i = 0; i < binSize; i++) {
-  //   gammaDec += gamma[i] * (2 ** (binSize - 1 - i))
-  //   epsilonDec += epsilon[i] * (2 ** (binSize - 1 - i))
-  // }
+  let pos = 0;
+  while(oxyGenIdx.length > 1) {
+    console.log("input before all:", input)
+    let indexes = checkPopularity(input, pos)
+    console.log("Indexes: ", indexes, "pos: ", pos)
 
-  return [gammaDec * epsilonDec, gammaDec, epsilonDec]
+    if (indexes.idx0.length > indexes.idx1.length) {
+      input = input.filter((value, index) => indexes.idx0.includes(index))
+      oxyGenIdx = oxyGenIdx.filter(elem => indexes.idx0.includes(elem))
+    
+    } else {
+      input = input.filter((value, index) => indexes.idx1.includes(index))
+      oxyGenIdx = oxyGenIdx.filter(elem => indexes.idx1.includes(elem))
+    }
+    console.log("oxyGenIdx: ", oxyGenIdx)
+    pos++;
+  }
+  console.log(input[oxyGenIdx[0]])
+
+  pos = 0;
+  while(CoScrubberIdx.length > 1 & pos < 15) {
+    let indexes = checkPopularity(CoScrubberIdx, pos)
+    if (indexes.idx0.length > indexes.idx1.length) {
+      CoScrubberIdx = CoScrubberIdx.filter(elem => indexes.idx1.includes(elem))
+    } else {
+      CoScrubberIdx = CoScrubberIdx.filter(elem => indexes.idx0.includes(elem))
+    }
+    pos++;
+  }
+
+    return [oxyGenIdx, CoScrubberIdx]
+    //return Number(input[oxyGenIdx[0]]) * Number(input[CoScrubberIdx[0]])
 }
 
-console.log(getMostOccurrences(example))
+console.log(getLifeSupport(example))
 
 // Challenge 1
 
-const fs = require('fs');
-fs.readFile('./Day3.txt', 'utf8', (err, data) => {
-  let input = formatInput(data)
-  console.log('Answer 3-1:', getMostOccurrences(input))
-})
+// const fs = require('fs');
+// fs.readFile('./Day3.txt', 'utf8', (err, data) => {
+//   let input = formatInput(data)
+//   console.log('Answer 3-1:', getLifeSupport(input))
+// })
