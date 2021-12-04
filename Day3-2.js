@@ -9,12 +9,13 @@ let example = `00100
 10000
 11001
 00010
-01010`
-const formatInput = input => input.split('\n')
-example = formatInput(example)
+01010`;
+const formatInput = input => input.split('\n');
+example = formatInput(example);
 
 const getLifeSupport = function(input) {
 
+  // Separates indexes with 0 and with 1 at a specific position
   const checkPopularity = function(input, pos) {
     let idx0 = [];
     let idx1 = [];
@@ -59,15 +60,15 @@ const getLifeSupport = function(input) {
   }
 
   // Convert to decimal and multiply
-  return parseInt(oxyInput[0], 2) * parseInt(coInput[0], 2)
-}
+  return parseInt(oxyInput[0], 2) * parseInt(coInput[0], 2);
+};
 
+// Run with example data:
 console.log(getLifeSupport(example))
 console.assert(typeof getLifeSupport(example) === 'number', 'Function not returning number.');
 console.assert(getLifeSupport(example) === 230, 'Function not returning correct value.');
 
 // Challenge 2
-
 const fs = require('fs');
 fs.readFile('./Day3.txt', 'utf8', (err, data) => {
   let input = formatInput(data)
