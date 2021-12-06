@@ -39,6 +39,8 @@ const formatInput = function(input) {
 }
 
 const calculateScore = function(input) {
+
+  // 1 Separate input info: draw list and boards
   const drawList = [...input.draw]
 
   const boards = [];
@@ -51,44 +53,51 @@ const calculateScore = function(input) {
     boards.push(newBoard)
   }
 
-  let round = 0;
-  let winner = 0;
-  let sumBoard = 0;
-  let draw = 0;
-
-  let currentBoard = [];
-  
-  while(!winner) {
-    draw = drawList[round]
-    // by board, marks with -1 draw numbers
-    boards.map(board => {
-      currentBoard = board      
-      for(let j = 0; j < board.length; j++) {
-        for(let i = 0; i < board[j].length; i++) {
-          if (board[j][i] === draw) {
-            board[j][i] = -1;
-            
-            const sumInLine = board[j].reduce(((p, c) => p + c), 0);
-            if (sumInLine === -5) { winner = true }
-            
-            const colValues = [];
-            board.map(line => colValues.push(line[i]));
-            const sumInColumn = colValues.reduce(((p, c) => p + c), 0);
-            if(sumInColumn === -5) { winner = true }
-          }
+  // Marks draw in board (value -1) and checks if it's a winner (line or col sum -5)
+  const markAndCheck = function(board, draw) {
+    let winner = false;
+    for(let j = 0; j < board.length; j++) {
+      for(let i = 0; i < board[j].length; i++) {
+        if (board[j][i] === draw) {
+          board[j][i] = -1;
+          
+          const sumInLine = board[j].reduce(((p, c) => p + c), 0);
+          if (sumInLine === -5) { winner = true }
+          
+          const colValues = [];
+          board.map(line => colValues.push(line[i]));
+          const sumInColumn = colValues.reduce(((p, c) => p + c), 0);
+          if(sumInColumn === -5) { winner = true }
         }
       }
-      
-    });
+    }
+    return { winner, board }
+  }
+
+  // Makes rounds until there is a winner
+  let round = 0;
+  let draw = 0;
+  let winnerBoard = [];
+  
+  while(!winnerBoard.length && round < 100) {
+    draw = drawList[round]
+    for (let board of boards) {
+      const results = markAndCheck(board, draw)
+      if (results.winner) {
+        winnerBoard = results.board
+      }
+    }
     round++;
   }
-  if (winner) {
-    currentBoard.map(line => {
-      const sumLine = line.reduce(((p, c) => c === -1 ? p + 0 : p + c), 0);
-      sumBoard += sumLine;
-    })
-  }
-  return sumBoard * draw;
+  
+  // Sum all non-draw numbers in winner board and returns score
+  let sumBoard = 0;
+  winnerBoard.map(line => {
+    const sumLine = line.reduce(((p, c) => c === -1 ? p + 0 : p + c), 0);
+    sumBoard += sumLine;
+  })
+
+  return sumBoard * draw
 }
 
 example = formatInput(example);
