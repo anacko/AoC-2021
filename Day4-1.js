@@ -79,7 +79,7 @@ const calculateScore = function(input) {
   let draw = 0;
   let winnerBoard = [];
   
-  while(!winnerBoard.length && round < 100) {
+  while(!winnerBoard.length && round < drawList.length) {
     draw = drawList[round]
     for (let board of boards) {
       const results = markAndCheck(board, draw)
