@@ -15,7 +15,7 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |2|Dive!|✔
 |3|Binary Diagnostic|✔
 |4|Giant Squid|✖| Incomplete
-|5|Hydrothermal Venture|➖| Pending
+|5|Hydrothermal Venture|✔
 |6|Lanternfish|✔
 |7|The Treachery of Whales|✔
 ---
