@@ -22,8 +22,6 @@ const formatInput = function(input) {
   return input;
 }
 
-example = formatInput(example)
-
 const keepHV = function(input) {
   const validLines = [];
   input.map(line =>{
@@ -34,14 +32,9 @@ const keepHV = function(input) {
   return validLines;
 }
 
-example = keepHV(example);
-console.log(example);
-
 const lineInstructions = function(line) {
 
-  let direction;
-  let posX;
-  let posY;
+  let direction, posX, posY;
 
   if (line[0][0] === line[1][0]) {
     direction = "H";
@@ -58,11 +51,7 @@ const lineInstructions = function(line) {
   return { direction, posX, posY }
 }
 
-example.map(line => console.log(lineInstructions(line)))
-
-
-
-const buildMap = function(input) {
+const sumDangerousAreas = function(input) {
   
   // Make map with all 0:
   const xPos = [];
@@ -105,4 +94,16 @@ const buildMap = function(input) {
 
   return sumAboveOnes
 }
-console.log(buildMap(example))
+
+example = formatInput(example);
+example = keepHV(example);
+console.log('Sum of all dangerous areas (example): ', sumDangerousAreas(example));
+
+// Challenge 1
+
+const fs = require('fs');
+fs.readFile('./Day5.txt', 'utf8', (err, data) => {
+  let input = formatInput(data)
+  input = keepHV(input);
+  console.log('Sum of all dangerous areas (5-1): ', sumDangerousAreas(input))
+})
