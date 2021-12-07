@@ -4,7 +4,6 @@ const formatInput = function(input) {
   return input.split(',').map(elem => Number(elem))
 }
 example = formatInput(example)
-console.log(example)
 
 const findFuelCostToPos = function(input, pos) {
   const fuelCost = [];
@@ -26,4 +25,14 @@ const findMinFuelCost = function(input) {
   return minFuel
 }
 
-console.log(findMinFuelCost(example))
+console.log("Minimum fuel cost (example): ",findMinFuelCost(example))
+console.assert(typeof findMinFuelCost(example) === 'number', 'Function does not return a number.')
+console.assert(findMinFuelCost(example) === 37, 'Function does not return correct value.')
+
+// Challenge 1
+
+const fs = require('fs');
+fs.readFile('./Day7.txt', 'utf8', (err, data) => {
+  let input = formatInput(data)
+  console.log('Minimum fuel cost (7-1): ', findMinFuelCost(input))
+})
