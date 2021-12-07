@@ -16,3 +16,4 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |4|Giant Squid|Incomplete
 |5|Hydrothermal Venture|Pending
 |6|Lanternfish|Complete
+|7|The Treachery of Whales|Pending
