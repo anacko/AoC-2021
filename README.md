@@ -14,8 +14,9 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |1|Sonar Sweep|✔
 |2|Dive!|✔
 |3|Binary Diagnostic|✔
-|4|Giant Squid|✖| Incomplete
+|4|Giant Squid|✖| 4-1 only
 |5|Hydrothermal Venture|✔
 |6|Lanternfish|✔
 |7|The Treachery of Whales|✔
+|8|Seven Segment Search|✖| 8-1 only
 ---
