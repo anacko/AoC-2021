@@ -25,3 +25,11 @@ console.log('Number of entries with unique values (example): ',countUniques(exam
 console.assert(typeof countUniques(example) === 'number', 'Function does not return a number.');
 console.assert(countUniques(example) === 26, 'Function does not return correct value.');
 
+
+// Challenge 1
+
+const fs = require('fs');
+fs.readFile('./Day8.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Number of entries with unique values (8-1): ', countUniques(input));
+})
