@@ -38,3 +38,8 @@ console.log('Total risk of the Lower Points (example): ', calculateTotalRisk(exa
 console.assert(typeof calculateTotalRisk(example) === 'number', 'Function does not return a number.')
 console.assert(calculateTotalRisk(example) === 15, 'Function does not return correct value.')
 
+const fs = require('fs');
+fs.readFile('./Day9.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Total risk of the Lower Points (8-1): ', calculateTotalRisk(input));
+})
