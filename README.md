@@ -20,5 +20,5 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |7|The Treachery of Whales|✔
 |8|Seven Segment Search|✖| 8-1 only
 |9|Smoke Basin|✖| 9-1 only
-|10|Syntax Scoring|➖| 10 example only
+|10|Syntax Scoring|➖| 10-1 only
 ---
