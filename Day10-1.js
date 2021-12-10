@@ -62,6 +62,14 @@ const addAllPoints = function(input) {
   return sumPoints;
 }
 
-console.log("Sum of corruption points: ", addAllPoints(example));
+console.log("Sum of corruption points (example): ", addAllPoints(example));
 console.assert(typeof addAllPoints(example) === 'number', 'Function does not return a number.')
 console.assert(addAllPoints(example) === 26397, 'Function does not return correct value.')
+
+// Challenge 1
+
+const fs = require('fs');
+fs.readFile('./Day10.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Sum of corruption points (10-1): ', addAllPoints(input));
+})
