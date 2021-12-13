@@ -78,7 +78,6 @@ fs.readFile('./Day13.txt', 'utf8', (err, data) => {
   console.log('Number of visible dots after first fold (13-1): ', makeFold(input.dots, input.instructions[0]));
 })
 
-
 /* 
 What means p' = 2f - p ?
 
@@ -97,16 +96,3 @@ Therefore,
 p' = 2f - p
 
 */
-
-/* 
-console.log("Sum of corruption points (example): ", addAllPoints(example));
-console.assert(typeof addAllPoints(example) === 'number', 'Function does not return a number.')
-console.assert(addAllPoints(example) === 26397, 'Function does not return correct value.')
-
-// Challenge 1
-
-const fs = require('fs');
-fs.readFile('./Day10.txt', 'utf8', (err, data) => {
-  let input = formatInput(data);
-  console.log('Sum of corruption points (10-1): ', addAllPoints(input));
-}) */
