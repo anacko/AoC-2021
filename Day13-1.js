@@ -73,16 +73,23 @@ const makeFold = function(dots, instruction) {
     })
   }
   
-  return newDots;
+  return newDots.length;
 }
 
 example = formatInput(example);
 const firstFold = makeFold(example.dots, example.instructions[0]);
-console.log("Dots visible after first fold (example): ",firstFold.length);
+console.log('Number of visible dots after first fold (example): ', firstFold);
 
-console.assert(makeFold(example.dots, example.instructions[0]).length === 17,
-  'Function does not return result with the proper length.');
+console.assert(typeof makeFold(example.dots, example.instructions[0]) === 'number', 'Function does not a number.');
+console.assert(makeFold(example.dots, example.instructions[0]) === 17, 'Function does not return correct value.');
 
+// Challenge 1
+
+const fs = require('fs');
+fs.readFile('./Day13.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Number of visible dots after first fold (13-1): ', makeFold(input.dots, input.instructions[0]));
+})
 
 
 /* 
