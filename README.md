@@ -21,4 +21,7 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |8|Seven Segment Search|✖| 8-1 only
 |9|Smoke Basin|✖| 9-1 only
 |10|Syntax Scoring|✔
+|11|Dumbo Octopus|➖|pending
+|12|Passage Pathing|➖|pending
+|13|Transparent Origami|➖|pending
 ---
