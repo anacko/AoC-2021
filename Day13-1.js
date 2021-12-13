@@ -56,12 +56,12 @@ const makeFold = function(dots, instruction) {
   const uniqueDots = [];
   for(const elem of newDots) {
     let isIncluded = false;
-    newDots.map(pos => (pos[0] === elem[0] && pos[1] === elem[1]) ? isIncluded = true : null);
-    if (!isIncluded) { uniqueDots.push(elem) }
+    uniqueDots.map(pos => { (pos[0] === elem[0] && pos[1] === elem[1]) ? isIncluded = true : null });
+    (!isIncluded) ? uniqueDots.push(elem) : null;
   }
 
   return uniqueDots.length;
-}
+};
 
 example = formatInput(example);
 const firstFold = makeFold(example.dots, example.instructions[0]);
