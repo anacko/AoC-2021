@@ -1,5 +1,3 @@
-const { platform } = require("os");
-
 let example = `6,10
 0,14
 9,10
@@ -32,48 +30,37 @@ const formatInput = function(input) {
   const instructions = [];
   input[1] = input[1].split('\n').map(instruction => instruction.split('='))
   input[1] = input[1].map(instruction => instructions.push([instruction[0].slice(-1), Number(instruction[1])]))
-    
+
   return { dots, instructions }
 }
 
 const makeFold = function(dots, instruction) {
+  const newDots = [];
+
+  // Folding: 
   // If it is below/right to the folding position, reflect it to up/left
   // (beyond folding line = higher than instruction[1] value)
-  
   // Reflect it by: p' = 2f - p (explanation below all)
-  const newDots = [];
   
   const f = instruction[1];
   // Folding up
   if(instruction[0] === 'y') {
-    dots.map(p => {
-      let isIncluded = false;
-      if(p[1] > f) {
-        const pLine = [p[0], 2*f - p[1]];
-        newDots.map(pos => (pos[0] === pLine[0] && pos[1] === pLine[1]) ? isIncluded = true : null);
-        if (!isIncluded) { newDots.push(pLine); }
-      } else {
-        newDots.map(pos => (pos[0] === p[0] && pos[1] === p[1]) ? isIncluded = true : null);
-        if (!isIncluded) { newDots.push(p); }
-      }
-    })
+    dots.map(p => (p[1] > f) ? newDots.push([p[0], 2*f - p[1]]) : newDots.push(p))
   }
   // Folding left
   if(instruction[0] === 'x') {
-    dots.map(p => {
-      let isIncluded = false;
-      if(p[0] > f) {
-        const pLine = [2*f - p[0], p[1]];
-        newDots.map(pos => (pos[0] === pLine[0] && pos[1] === pLine[1]) ? isIncluded = true : null);
-        if (!isIncluded) { newDots.push(pLine); }
-      } else {
-        newDots.map(pos => (pos[0] === p[0] && pos[1] === p[1]) ? isIncluded = true : null);
-        if (!isIncluded) { newDots.push(p); }
-      }
-    })
+    dots.map(p => (p[0] > f) ? newDots.push([2*f - p[0], p[1]]) : newDots.push(p))
   }
   
-  return newDots.length;
+  // Removing duplicates, require deep comparison (by element)
+  const uniqueDots = [];
+  for(const elem of newDots) {
+    let isIncluded = false;
+    newDots.map(pos => (pos[0] === elem[0] && pos[1] === elem[1]) ? isIncluded = true : null);
+    if (!isIncluded) { uniqueDots.push(elem) }
+  }
+
+  return uniqueDots.length;
 }
 
 example = formatInput(example);

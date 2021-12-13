@@ -23,5 +23,5 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |10|Syntax Scoring|✔
 |11|Dumbo Octopus|➖|pending
 |12|Passage Pathing|➖|pending
-|13|Transparent Origami|➖|pending
+|13|Transparent Origami|✖| 13-1 only
 ---
