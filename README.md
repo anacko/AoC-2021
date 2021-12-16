@@ -24,5 +24,5 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |11|Dumbo Octopus|➖|pending
 |12|Passage Pathing|➖|pending
 |13|Transparent Origami|✔
-|14|Extended Polymerization|✖| 14-1 only
+|14|Extended Polymerization|✔
 ---

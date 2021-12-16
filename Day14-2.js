@@ -15,30 +15,30 @@ BN -> B
 BB -> N
 BC -> B
 CC -> N
-CN -> C`
+CN -> C`;
 
 const formatInput = function(input) {
 
-  input = input.split('\n')
+  input = input.split('\n');
 
-  const poly = input[0]
+  const poly = input[0];
 
   const rules = {};
-  input.slice(2).map(rule => rules[rule[0]+rule[1]] = rule[6])
+  input.slice(2).map(rule => rules[rule[0]+rule[1]] = rule[6]);
 
-  return { poly, rules }
+  return { poly, rules };
 }
 
 const addPairsRules = function(rules) {
   const newRules = {};
   for(const rule in rules) {
-    newRules[rule] = [ rule[0] + rules[rule], rules[rule] + rule[1] ]
+    newRules[rule] = [ rule[0] + rules[rule], rules[rule] + rule[1] ];
   }
   return newRules;
 }
 const makeOneRound = function(letterFreq, pairsFreq, rules, pairsRules) {
   
-  const newPairsFreq = {...pairsFreq}
+  const newPairsFreq = {...pairsFreq};
   
   for(const pair in pairsFreq) {
     if(pairsFreq[pair]) {
@@ -56,11 +56,9 @@ const makeOneRound = function(letterFreq, pairsFreq, rules, pairsRules) {
 const calculateFrequencyDiff = function(poly, rules, n) {
   
   let letterFreq = {};
-  Object.values(rules).map(letter => letterFreq[letter] = 0)
-  console.log(letterFreq)
+  Object.values(rules).map(letter => letterFreq[letter] = 0);
   for(const letter of poly) { letterFreq[letter]++; }
-  console.log(letterFreq)
-
+  
   let pairsFreq = {};
   for(const rule in rules) { pairsFreq[rule] = 0; }
   for(let i = 1; i < poly.length; i++) {
@@ -79,24 +77,23 @@ const calculateFrequencyDiff = function(poly, rules, n) {
   let maxFreq = letterFreq[Object.keys(letterFreq)[0]];
   let minFreq = letterFreq[Object.keys(letterFreq)[0]];
   for(const freq in letterFreq) {
-    //console.log(freq, letterFreq[freq])
-    if (letterFreq[freq] > maxFreq) { maxFreq = letterFreq[freq] }
-    if (letterFreq[freq] < minFreq) { minFreq = letterFreq[freq] }
+    if (letterFreq[freq] > maxFreq) { maxFreq = letterFreq[freq]; }
+    if (letterFreq[freq] < minFreq) { minFreq = letterFreq[freq]; }
   }
 
   return maxFreq - minFreq;
 }
 
-example = formatInput(example)
-console.log("Frequency interval (example): ", calculateFrequencyDiff(example.poly, example.rules, 40))
+example = formatInput(example);
+console.log("Frequency interval (example): ", calculateFrequencyDiff(example.poly, example.rules, 40));
 console.assert(typeof calculateFrequencyDiff(example.poly, example.rules, 40) === 'number', 
-  'Function does not return a number.')
+  'Function does not return a number.');
 console.assert(calculateFrequencyDiff(example.poly, example.rules, 40) === 2188189693529, 
-  'Function does not return correct value.')
+  'Function does not return correct value.');
 
 // Challenge 1
 const fs = require('fs');
 fs.readFile('./Day14.txt', 'utf8', (err, data) => {
   let input = formatInput(data);
-  console.log('Frequency interval (14-1): ', calculateFrequencyDiff(input.poly, input.rules, 40));
+  console.log('Frequency interval (14-2): ', calculateFrequencyDiff(input.poly, input.rules, 40));
 })

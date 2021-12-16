@@ -19,27 +19,27 @@ CN -> C`
 
 const formatInput = function(input) {
 
-  input = input.split('\n')
+  input = input.split('\n');
 
-  const poly = input[0]
+  const poly = input[0];
 
   const rules = {};
-  input.slice(2).map(rule => rules[rule[0]+rule[1]] = rule[6])
+  input.slice(2).map(rule => rules[rule[0]+rule[1]] = rule[6]);
 
-  return { poly, rules }
+  return { poly, rules };
 }
 
 const makeOneRound = function(poly, rules) {
   let newPoly = poly[0];
   for(let i = 1; i < poly.length; i++) {
-    newPoly += rules[poly[i-1]+poly[i]] + poly[i]
+    newPoly += rules[poly[i-1]+poly[i]] + poly[i];
   }
   return newPoly;
 }
 
 const calculateFrequencyDiff = function(poly, rules, n) {
   for(let i = 1; i <= n; i++) {
-    poly = makeOneRound(poly, rules)
+    poly = makeOneRound(poly, rules);
   }
   
   const letterFreq = {}
@@ -50,19 +50,19 @@ const calculateFrequencyDiff = function(poly, rules, n) {
   let maxFreq = 0;
   let minFreq = poly.length;
   for(const freq in letterFreq) {
-    if (letterFreq[freq] > maxFreq) { maxFreq = letterFreq[freq] }
-    if (letterFreq[freq] < minFreq) { minFreq = letterFreq[freq] }
+    if (letterFreq[freq] > maxFreq) { maxFreq = letterFreq[freq]; }
+    if (letterFreq[freq] < minFreq) { minFreq = letterFreq[freq]; }
   }
 
   return maxFreq - minFreq;
 }
 
 example = formatInput(example)
-console.log("Frequency interval (example): ", calculateFrequencyDiff(example.poly, example.rules, 10))
+console.log("Frequency interval (example): ", calculateFrequencyDiff(example.poly, example.rules, 10));
 console.assert(typeof calculateFrequencyDiff(example.poly, example.rules, 10) === 'number', 
-  'Function does not return a number.')
+  'Function does not return a number.');
 console.assert(calculateFrequencyDiff(example.poly, example.rules, 10) === 1588, 
-  'Function does not return correct value.')
+  'Function does not return correct value.');
 
 // Challenge 1
 const fs = require('fs');
