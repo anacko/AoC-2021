@@ -63,3 +63,10 @@ console.assert(typeof calculateFrequencyDiff(example.poly, example.rules, 10) ==
   'Function does not return a number.')
 console.assert(calculateFrequencyDiff(example.poly, example.rules, 10) === 1588, 
   'Function does not return correct value.')
+
+// Challenge 1
+const fs = require('fs');
+fs.readFile('./Day14.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Frequency interval (14-1): ', calculateFrequencyDiff(input.poly, input.rules, 10));
+})
