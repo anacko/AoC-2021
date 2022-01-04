@@ -13,9 +13,7 @@ const formatInput = function(input) {
   input = input.split('\n').map(line => line.split('').map(elem => parseInt(elem)))
   return input
 }
-
 example = formatInput(example)
-console.log(example)
 
 const singleStep = function(octoMap) {
   const increaseMap = [];
@@ -87,4 +85,6 @@ const makeNSteps = function(map, n) {
   return sumN;
 }
 
-console.log(makeNSteps(example, 2))
+console.log('Number of flashes after 100 steps: ', makeNSteps(example, 100))
+console.assert(typeof makeNSteps(example, 100) === 'number', 'Function does not return a number.')
+console.assert(makeNSteps(example, 100) === 1656, 'Function does not return correct value.')
