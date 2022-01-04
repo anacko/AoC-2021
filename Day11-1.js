@@ -85,6 +85,13 @@ const makeNSteps = function(map, n) {
   return sumN;
 }
 
-console.log('Number of flashes after 100 steps: ', makeNSteps(example, 100))
+console.log('Number of flashes after 100 steps (example): ', makeNSteps(example, 100))
 console.assert(typeof makeNSteps(example, 100) === 'number', 'Function does not return a number.')
 console.assert(makeNSteps(example, 100) === 1656, 'Function does not return correct value.')
+
+// Challenge 1
+const fs = require('fs');
+fs.readFile('./Day11.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Number of flashes after 100 steps (11-1): ', makeNSteps(input, 100));
+})
