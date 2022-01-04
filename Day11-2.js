@@ -98,8 +98,8 @@ console.assert(typeof makeNSteps(example) === 'number', 'Function does not retur
 console.assert(makeNSteps(example) === 195, 'Function does not return correct value.')
 
 // Challenge 2
-// const fs = require('fs');
-// fs.readFile('./Day11.txt', 'utf8', (err, data) => {
-//   let input = formatInput(data);
-//   console.log('Number of flashes after 100 steps (11-2): ', makeNSteps(input));
-// })
+const fs = require('fs');
+fs.readFile('./Day11.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Number of steps until all flash (11-2): ', makeNSteps(input));
+})
