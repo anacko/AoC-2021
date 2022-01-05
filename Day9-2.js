@@ -35,7 +35,7 @@ const mapBasinCenters = function(input) {
 
   // 2. Extract the size of basin, by each center
   let basinSizes = [];
-  basinCenters.map(centerPos => basinSizes.push(mapBasinSize(centerPos)))
+  basinCenters.map(centerPos => basinSizes.push(mapBasinSize(centerPos, input)))
   basinSizes.sort((a, b) => b - a)
 
   // 3. Calculate product of the first three terms
@@ -44,9 +44,7 @@ const mapBasinCenters = function(input) {
   return prod
 }
 
-const input = example
-
-const mapBasinSize = function(centerPos) {
+const mapBasinSize = function(centerPos, input) {
   const allPos = [[centerPos[0], centerPos[1]]]     // ex format: [ [3, 2] ]
   const allPosStr = [centerPos[0]+'-'+centerPos[1]] // ex format: [ '3-2' ]
   
@@ -92,8 +90,8 @@ console.log('Product of the three largest basins (example): ', mapBasinCenters(e
 console.assert(typeof mapBasinCenters(example) === 'number', 'Function does not return a number.')
 console.assert(mapBasinCenters(example) === 1134, 'Function does not return correct value.')
 
-// const fs = require('fs');
-// fs.readFile('./Day9.txt', 'utf8', (err, data) => {
-//   let input = formatInput(data);
-//   console.log('Product of the three largest basins (8-2): ', mapBasinCenters(input));
-// })
+const fs = require('fs');
+fs.readFile('./Day9.txt', 'utf8', (err, data) => {
+  let input = formatInput(data);
+  console.log('Product of the three largest basins (9-2): ', mapBasinCenters(input));
+})
