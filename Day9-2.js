@@ -25,7 +25,7 @@ const mapBasinCenters = function(input) {
         if(n < input[j][i + 1]) {
           if(n < input[j - 1][i]) {
             if(n < input[j + 1][i]) {
-              basinCenters.push([j][i]);
+              basinCenters.push([j, i]);
             }
           }
         }
@@ -33,29 +33,53 @@ const mapBasinCenters = function(input) {
     }
   }
 
-  // 2. Extract the size of basin, by its center
-  let center = [3,2]
+  // 2. Extract the size of basin, by each center
+  let basinSizes = [];
+  basinCenters.map(centerPos => basinSizes.push(mapBasinSize(centerPos)))
+  basinSizes.sort((a, b) => b - a)
 
-  // a. read up-down-left-right. If any of them is !9 and is not registered yet, add position to the array.
-  // b. read the next term of the array keeper with (a) criteria.
-  // c. when no more adds to the keeper are there, return the length of the array.
-
-  return basinCenters;
+  // 3. Calculate product of the first three terms
+  const prod = basinSizes.length >= 3 ? basinSizes[0]*basinSizes[1]*basinSizes[2] : 0;
+  
+  return prod
 }
 
 const input = example
-const mapBasinSize = function(centerPos) {
-  const allPos = [[centerPos[0], centerPos[1]]]     // ex. [ [3, 2] ]
-  const allPosStr = [centerPos[0]+'-'+centerPos[1]] // ex. [ '3-2' ]
 
+const mapBasinSize = function(centerPos) {
+  const allPos = [[centerPos[0], centerPos[1]]]     // ex format: [ [3, 2] ]
+  const allPosStr = [centerPos[0]+'-'+centerPos[1]] // ex format: [ '3-2' ]
+  
+  // a. read up-down-left-right. If any of them is !9 and is not registered yet, add position to the arrays.
+  // b. read the next term of the keeper arrays with (a) criteria.
+  // c. when no more adds to the keeper are there, return the length of the array.
   let n = 0;
   while (n < allPos.length) {
-    const x = allPos[n][0]
-    const y = allPos[n][1]
+    const x = allPos[n][0] // row index
+    const y = allPos[n][1] // col index
 
+    // up
+    if ((input[x][y - 1] !== 9) && !allPosStr.includes(x + '-' + (y - 1))) {
+      allPos.push([x, y - 1]);
+      allPosStr.push(x + '-' + (y - 1));
+    }
+
+    // down
+    if ((input[x][y + 1] !== 9) && !allPosStr.includes(x + '-' + (y + 1))) {
+      allPos.push([x, y + 1]);
+      allPosStr.push(x + '-' + (y + 1));
+    }
+
+    // left
     if ((input[x - 1][y] !== 9) && !allPosStr.includes((x - 1) + '-' + y)) {
       allPos.push([x - 1, y]);
       allPosStr.push((x - 1) + '-' + y);
+    }
+
+    // right
+    if ((input[x + 1][y] !== 9) && !allPosStr.includes((x + 1) + '-' + y)) {
+      allPos.push([x + 1, y]);
+      allPosStr.push((x + 1) + '-' + y);
     }
 
     n++;
@@ -64,12 +88,12 @@ const mapBasinSize = function(centerPos) {
   return allPos.length
 }
 
-console.log('Total risk of the Lower Points (example): ', calculateTotalRisk(example))
-console.assert(typeof calculateTotalRisk(example) === 'number', 'Function does not return a number.')
-console.assert(calculateTotalRisk(example) === 15, 'Function does not return correct value.')
+console.log('Product of the three largest basins (example): ', mapBasinCenters(example))
+console.assert(typeof mapBasinCenters(example) === 'number', 'Function does not return a number.')
+console.assert(mapBasinCenters(example) === 1134, 'Function does not return correct value.')
 
-const fs = require('fs');
-fs.readFile('./Day9.txt', 'utf8', (err, data) => {
-  let input = formatInput(data);
-  console.log('Total risk of the Lower Points (8-1): ', calculateTotalRisk(input));
-})
+// const fs = require('fs');
+// fs.readFile('./Day9.txt', 'utf8', (err, data) => {
+//   let input = formatInput(data);
+//   console.log('Product of the three largest basins (8-2): ', mapBasinCenters(input));
+// })
