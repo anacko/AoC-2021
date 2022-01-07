@@ -91,7 +91,7 @@ console.assert(typeof calculateFrequencyDiff(example.poly, example.rules, 40) ==
 console.assert(calculateFrequencyDiff(example.poly, example.rules, 40) === 2188189693529, 
   'Function does not return correct value.');
 
-// Challenge 1
+// Challenge 2
 const fs = require('fs');
 fs.readFile('./Day14.txt', 'utf8', (err, data) => {
   let input = formatInput(data);
