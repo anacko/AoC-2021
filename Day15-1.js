@@ -1,3 +1,5 @@
+const { genPaths } = require('./Day15-aux.js')
+
 let example = `1163751742
 1381373672
 2136511328
@@ -26,9 +28,22 @@ const sumPath = function(sequence, input) {
   return sumPath;
 }
 
-example = formatInput(example);
-console.log(example)
+const calculateLowestRisk = function(input) {
+  const n = input[0].length - 1;
+  const t = n + input.length - 1;
+  const allPaths = genPaths(n, t);
+  let lowestRisk = sumPath(allPaths[0].split(''), input);
+  allPaths.map(path => {
+    const risk = sumPath(path.split(''), input);
+    if (risk < lowestRisk) { lowestRisk = risk }
+  })
+  return lowestRisk;
+}
 
-const path = 'iijjjjjjijiijiiiji'
-console.log(sumPath(path.split(''), example))
-// For now, it sums the total risk for a given path.
+example = formatInput(example);
+console.log("Lowest Risk: ", calculateLowestRisk(example))
+console.assert(typeof calculateLowestRisk(example) === 'number', 
+  'Function does not return a number.');
+console.assert(calculateLowestRisk(example) === 40, 
+  'Function does not return correct value.');
+
