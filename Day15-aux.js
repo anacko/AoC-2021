@@ -1,93 +1,93 @@
-/*
-0 1 2: iiijjj
-0 1 3: iijijj
-0 1 4: iijjij
-0 1 5: iijjji
-0 2 3: ijiijj
-0 2 4: ijijij
-0 2 5: ijijji
-0 3 4: ijjiij
-0 3 5: ijjiji
-0 4 5: ijjjii
-
-1 2 3: jiiijj
-1 2 4: jiijij
-1 2 5: jiijji
-1 3 4: jijiij
-1 3 5: jijiji
-1 4 5: jijjii
-
-2 3 4: jjiiij
-2 3 5: jjiiji
-2 4 5: jjijii
-
-3 4 5: jjjiii
-*/
-
-// for(i = 0; i < 6; i++) {
-//   for(j = i+1; j < 6; j++) {
-//     for(k = j+1; k < 6; k++) {
-//       console.log(i, "-", j, "-", k)
-//     }
-//   }
-// }
-
-
-
+/**
+ * Returns all possible positions of n elements distributed in t slots.
+ * @param {Number} n is the number of elements to be distributed. 
+ * @param {Number} t is the number of slots available.
+ * @returns Array of arrays: all possible positions.
+ */
 const genConfigs = function(n, t) {
-  const allConfig = [[]]
+
+  if (n > t) { return "Not possible. More elements than slots." }
+
+  // Set initial configuration and inserts in the list
+  const allConfig = [[]];
   for(i = 0; i < n; i++) { allConfig[0].push(i) }
 
-  // move element in pos
-  let currentPos = n - 1 // last elem pos
-  while(currentPos >=0){
 
+  // Set new configuration:
+  let v = t - n;
+  let k = n - 1;
+  while (k >= 0) {
+    // 1. Get last configuration available
     const currentConfig = [...allConfig[allConfig.length - 1]]
-    let currentVal = currentConfig[currentPos]
     
-    for(i = 1; i < t - n + currentPos; i++) {
-      let newConfig = currentConfig.slice(0, currentPos)
-      newConfig.push(currentVal + i)
-      newConfig.push(...currentConfig.slice(currentPos + 1))
-      allConfig.push(newConfig)
-    }
+    // 2. Compare values with the max for each position: from where to change
+    k = n - 1;
+    while(currentConfig[k] >= v + k) { k--; }
     
-    currentPos--;
+    // 3. New values to input: current value + 1 and adding 1 each element forward
+    let currentVal = currentConfig[k]
+    const newVals = Array(n - k).fill(currentVal + 1).map((elem, idx) => elem + idx)
+
+    // 4. Replace old values (1) from starting point (2) with new values (3)
+    let newConfig = currentConfig.slice(0, k)
+    newConfig.push(...newVals)
+
+    // 5. Add new configuration to the list, repeat.
+    allConfig.push(newConfig)
   }
+
+  // Last entry is redundant.
+  // Removing last entry is faster than a comparison at each step of the while loop.
+  allConfig.pop()
 
   return allConfig
 }
-//console.log(genConfigs(3, 6))
 
+const genPaths = function(n, t) {
+  const allConfigs = genConfigs(n,t);
+  const allPaths = [];
 
-let n = 5;
-let t = 7;
-const firstConfig = []
-for(i = 0; i < n; i++) { firstConfig.push(i) }
-
-const allConfig = [[...firstConfig]]
-
-const lastConfig = []
-for(i = t - n; i < t; i++) { lastConfig.push(i) }
-
-let k = 1
-while (k) {
-  const currentConfig = [...allConfig[allConfig.length - 1]]
-
-  k = 0;
-  while(k < lastConfig.length) {
-    if(currentConfig[k] !== lastConfig[k]) { k++; } else { break; }
+  for(let config of allConfigs) {
+    path = 'j'.repeat(t);
+    config.map(pos => {
+      path = path.substring(0, pos) + 'i' +path.substring(pos + 1)
+    })
+    allPaths.push(path)
   }
-  let currentPos = k - 1;
-
-  let currentVal = currentConfig[currentPos]
-  while (currentVal < t - n + currentPos) {
-    currentVal++;
-    let newConfig = currentConfig.slice(0, currentPos)
-    newConfig.push(currentVal)
-    newConfig.push(...currentConfig.slice(currentPos + 1))  
-    allConfig.push(newConfig)
-  }
+  return allPaths
 }
 
-console.log(allConfig)
+module.exports = { genConfigs, genPaths};
+
+/*
+PURPOSE:
+This function returns a list with the positions of all possible configurations when
+some elements are distributed in slots.
+
+Example. genConfigs(3,6) is for 3 elements in 6 slots.
+Each number represents the position of each (1) in all possible configurations.
+
+0 1 2: 111000
+0 1 3: 110100
+0 1 4: 110010
+0 1 5: 110001
+0 2 3: 101100
+0 2 4: 101010
+0 2 5: 101001
+0 3 4: 100110
+0 3 5: 100101
+0 4 5: 100011
+
+1 2 3: 011100
+1 2 4: 011010
+1 2 5: 011001
+1 3 4: 010110
+1 3 5: 010101
+1 4 5: 010011
+
+2 3 4: 001110
+2 3 5: 001101
+2 4 5: 001011
+
+3 4 5: 000111
+*/
