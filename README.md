@@ -25,5 +25,5 @@ Challenges for 2021 edition [here](https://adventofcode.com/2021).
 |12|Passage Pathing|➖|pending
 |13|Transparent Origami|✔
 |14|Extended Polymerization|✔
-|15|Chiton|➖|pending
+|15|Chiton|✖|example only
 ---
